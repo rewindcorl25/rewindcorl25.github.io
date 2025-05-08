@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ReWiND: Language-Guided Rewards Teach Robot Policies without New Demonstrations">
+  <meta name="keywords" content="Reinforcement Learnings">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReWiND: Language-Guided Rewards Teach Robot Policies without New Demonstrations</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/empty.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">ReWiND: Language-Guided Rewards Teach Robot Policies without New Demonstrations</h1>
+          <div class="is-size-3 publication-authors">
+            <span class="author-block">
+              <a href="">ReWiND Authors</a>
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="is-centered has-text-centered">
+      <video id="teaser_video" width=100% muted autoplay controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/timelapse.mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<br><br>
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <!-- <p>
+            We present the first method capable of photorealistically reconstructing a non-rigidly
+            deforming scene using photos/videos captured casually from mobile phones.
+          </p> -->
+          <p>
+            We introduce ReWiND, a framework for learning robot manipulation tasks solely from language instructions without per-task demonstrations. 
+            Standard reinforcement learning (RL) and imitation learning methods require expert supervision through human-designed reward functions or 
+            demonstrations for every new task. In contrast, ReWiND starts from a small demonstration dataset to learn: (1) a data-efficient, 
+            language-conditioned reward function that labels the dataset with rewards, and (2) a language-conditioned policy pre-trained with offline 
+            RL using these rewards. Given an unseen task variation, ReWiND fine-tunes the pre-trained policy using the learned reward function, 
+            requiring minimal online interaction. We show that ReWiND's reward model generalizes effectively to unseen tasks, 
+            outperforming baselines by up to <b>2.4X</b> in reward generalization and policy alignment metrics. 
+            Finally, we demonstrate that ReWiND enables sample-efficient adaptation to new tasks in both simulation and on a real bimanual manipulation platform, 
+            taking a step towards scalable, real-world robot learning.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br><br><br><br>
+
+    <!--/ Abstract. -->
+    <div class="content has-text-centered">
+      <img src="./static/images/teaser_long.png"
+            class="interpolation-image"
+            alt="Interpolate start reference image.">
+      </img>
+      <br>
+      <br>
+      <p><b>We pre-train a policy and reward model from a small set of language-labeled demos. Then, we solve unseen task variations via language-guided RL—without additional demos.</b></p></div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Animation. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Summary</h2>
+        <div class="content has-text-justified"> 
+          <p>
+            Our core contribution is in designing ReWiND's reward model to capture three key properties: 
+            <b>dense feedback</b>, <b>generalization</b>, and <b>robustness</b>.
+            See our paper to learn about how we achieve these properties!
+           </p>
+
+            <!--First, to provide dense, informative
+            feedback, we design a cross-modal sequential aggregator that leverages pre-trained vision and language 
+            embeddings to predict progress within demonstration videos. Progress prediction offers a
+            stable, densely supervised training signal that naturally translates into a dense reward function. 
+            We also introduce video rewinding to generate failure trajectories from successful demonstrations, 
+            allowing ReWiND to provide dense reward feedback even when the policy is making mistakes. Then,
+            to ensure generalization across unseen tasks and robustness to diverse behaviors, we incorporate
+            targeted inductive biases into the cross-modal sequential aggregator architecture and supplement
+            training with diverse robotics data from Open-X, enabling the reward model to extrapolate to
+            novel visual and linguistic scenarios.        </p> -->
+        </div>
+        <!-- Re-rendering. -->
+        <h3 class="title is-4 has-text-centered">Method</h3>
+        <div class="content has-text-centered">
+          <img src="./static/images/rewind_method.png"
+               class="interpolation-image"
+               alt="Interpolate start reference image.">
+          </img>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            ReWiND is a framework for learning robot manipulation tasks solely from language instructions without per-task demonstrations. Our training pipeline consists of three main components:
+          </p>
+          <p>
+            <b>Reward model training.</b> We train a reward model on a small demonstration dataset and a
+            curated subset of Open-X, augmented with LLM-generated instructions and video rewinding. 
+            The reward model predicts video progress dense rewards from pre-trained embeddings of each image or a video rollout and language instructions, 
+            and assigns 0 progress to misaligned video-language pairs.
+          </p>
+          <p>
+            <b>Offline dataset relabeling & pre-training.</b> We use the trained reward model to label offline dataset with rewards and pre-train a 
+            language-conditioned policy using offline RL (IQL).
+          </p>
+          <p>
+            <b>Online policy training.</b>
+            For an unseen task, we fine-tune the policy with online rollouts and reward labels from the reward model.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<br><hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h3 class="title is-3 has-text-centered">Environments & Results</h3>
+        <div class="content has-text-centered">
+          <div class="columns is-centered">
+              <img src="./static/images/metaworld.png"
+                   class="interpolation-image env-image"
+                   style="width:22%; object-fit:contain"
+                   alt="MetaWorld environment">
+              </img>
+              <div style="width: 5%;"></div>
+              <img src="./static/images/real_robot_env.png"
+                   class="interpolation-image env-image" 
+                   style="width:70%; object-fit:contain"
+                   alt="Real World environment">
+              </img>
+          </div>
+        </div>
+      </div>
+    </div>
+    In each environment, we train the reward model with just 5 demonstrations for each of 20 tasks. 
+    All environments are <b>image based, without ground truth state information</b>.
+    <br>
+    <b>(a) MetaWorld:</b> MetaWorld provides large set of tabletop manipulation tasks in simulation.
+    <br>
+    <b>(b) Real World Bimanual Manipulation: </b>We also evaluate ReWiND on a real-world, low-cost, bimanual manipulation platform. 
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+      <h4 class="title is-4 has-text-centered">Meta-World RL Results</h4> 
+      <p>
+        ReWiND achieves 79% success rate after 100k environment steps on 8 unseen tasks in Meta-World, about 2x better than the best baseline.
+        We also find it is more sample efficient than all baselines.
+      </p>
+      <div class="content has-text-centered">
+        <div class="columns is-centered">
+          <div class="column">
+            <div style="text-align:center;">
+              <img src="./static/images/metaworld_success_rate.png"
+                    class="interpolation-image"
+                    alt="Interpolate start reference image."
+                    style="width:50%; height:auto;">
+              <img src="./static/images/rewind_metaworld_sample_efficiency.png"
+                    class="interpolation-image"
+                    alt="Interpolate start reference image."
+                    style="width:35%; height:auto;">
+              <div style="color:black; font-size:20px; margin-top:10px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <br>
+      <br />
+    <h4 class="title is-4 has-text-centered">Real World Manipulation</h4>
+    <div class="content has-text-justified">
+      <h5 class="title is-5">Online Finetuning</h5> 
+      <p>
+        We perform 5 seen and unseen tasks on table top bimanual manipulation with online finetuning with ReWiND rewards. 
+        ReWiND rewards enable learning unseen tasks and achieve high success rates in <b>only 1 hour of online interactions</b>.
+      </p>
+
+      <div class="content has-text-centered">
+        <div class="columns is-centered">
+          <div class="column">
+            <img src="./static/images/real_robot_results.png"
+                class="interpolation-image"
+                alt="Interpolate start reference image.">
+            </img>
+            <br />
+            <b style="color:black;font-size:20px;"> Policy Success Rate after fine-tune with ReWiND reward </b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <hr>
+
+
+  
+<section class="section">
+  <h2 class="title is-3 has-text-centered">Evaluation Rollouts</h2>
+  <br>
+  <!-- Row 1 -->
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; text-align: center; margin-bottom: 20px;">
+    <div style="width: 25%; margin: 20px;">
+      <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/cloth_rewind_success.mp4">
+      </video>
+      <div style="font-size: 16px; color: black; margin-top: 5px;">Fold the blue towel.</div>
+    </div>
+    <div style="width: 25%; margin: 20px;">
+      <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/language_rewind_success.mp4">
+      </video>
+      <div style="font-size: 16px; color: black; margin-top: 5px;">Put the orange cup in the box.</div>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; text-align: center; margin-bottom: 20px;">
+    <div style="width: 25%; margin: 20px;">
+      <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/spatial_rewind_success.mp4">
+      </video>
+      <div style="font-size: 16px; color: black; margin-top: 5px;">Put the orange cup on the red plate.</div>
+    </div>
+    <div style="width: 25%; margin: 20px;">
+      <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/clutter_rewind_success.mp4">
+      </video>
+      <div style="font-size: 16px; color: black; margin-top: 5px;">Open the red trash bin</div>
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div style="display: flex; justify-content: center; text-align: center;">
+    <div style="width: 25%; margin: 20px;">
+      <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/cups_rewind_success.mp4">
+      </video>
+      <div style="font-size: 16px; color: black; margin-top: 5px;">Separate the blue and red cups.</div>
+    </div>
+  </div>
+</section>
+
+
+
+  <hr>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered"> 
+      <div class="column is-full-width">
+        <h2 class="title is-2 has-text-centered">Reward Analysis</h2>
+        <h6 class="title is-6 has-text-centered">Below we evaluate the reward model's performance Qualitatively and Quantitatively.</h6>
+        <br>
+        <div class="content has-text-justified">
+        <h5 class="title is-4 has-text-centered">Qualitative Reward Analysis </h5> 
+        <p>
+          We qualitatively analyze the reward model's performance by examining how it rewards successful, partially successful, and a fully reversed demonstration from an unseen task.
+        </p>
+        <div class="container is-max-desktop">
+          <h4 class="title is-5 has-text-centered">MetaWorld Reward Alignment Videos</h4>
+          <div class="columns is-centered is-multiline" style="margin-top:20px;">
+            <div class="column is-half has-text-centered">
+              <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+                <source src="./static/videos/metaworld_reward_alignment_success.mp4">
+              </video>
+              <p style="margin-top:5px;"><b>Successful Policy Rollout:</b> ReWiND rewards increase from 0 to 1 as the task progresses successfully.</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+                <source src="./static/videos/metaworld_reward_alignment_dithering.mp4">
+              </video>
+              <p style="margin-top:5px;"><b>Partially Successful Policy Rollout:</b> ReWiND rewards increase and then stay constant as the arm dithers back and forth near the button.</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <video id="teaser_video" width=100% muted autoplay loop controls style="border-radius:10px;" margin="auto">
+                <source src="./static/videos/metaworld_reward_alignment_reverse.mp4">
+              </video>
+              <p style="margin-top:5px;"><b>Failed Policy Rollout:</b> ReWiND rewards decrease to 0 as the policy fails to complete the task.</p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <br>
+        
+        <h5 class="title is-5 has-text-centered">Confusion Matrix</h5> 
+        <p>
+          We evaluate reward confusion matrices on <b>unseen tasks</b>.
+          The rows are videos of task demonstrations and the columns are language instructions.
+          We expect the reward model to assign high rewards (<span style="color:blue">blue color</span>) to the diagonal matching elements and low rewards (white color) to the off-diagonal elements.
+        </p>
+        <div class="content has-text-centered">
+        <!--  3 gif images place in one row -->
+          <div class="columns is-centered">
+            <div class="column">
+              <div style="text-align:left;">
+                <b style="color:black;font-size:20px;"> Metaworld Confusion Matrix </b>
+              </div>
+              <img src="./static/images/rewind_eval_confusion_matrices.png"
+                  class="interpolation-image"
+                  alt="Interpolate start reference image.">
+              </img>
+            </div>
+          </div>
+          <div class="columns is-centered">
+            <div class="column">
+              <div style="text-align:left;">
+                <b style="color:black;font-size:20px;"> Real Robot Confusion Matrix </b>
+              </div>
+              <img src="./static/images/rewind_eval_real_confusion_matrics.png"
+                  class="interpolation-image"
+                  alt="Interpolate start reference image.">
+              </img>
+            </div>
+          </div>
+        </div>
+        <br />
+        <br /> 
+        </div>
+        <h5 class="title is-5 has-text-centered">Quantitative Reward Analysis</h5> 
+        <p>
+          We consider various metrics for analyzing reward models with offline videos and encourage looking at the paper for more details.
+          We consider analyzing the reward models across three axes: (1) Demo Video Reward Alignment, (2) Policy Rollout Reward Ranking, and (3) Input Robustness.
+          We find that ReWiND outperforms the baselines on all three axes, and ReWiND with Open-X data performs better than the one with only MetaWorld data on Rebustness.
+        </p>
+        <br />
+
+        <div class="content has-text-centered">
+          <div class="columns is-centered">
+            <div class="column">
+              <img src="./static/images/metaworld_table_2.png"
+                  class="interpolation-image"
+                  alt="Interpolate start reference image.">
+              </img>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="is-centered has-text-centered">
+      <h4 class="title is-4">Improving with ReWiND</h4>
+      <video id="teaser_video" width=100% muted autoplay controls style="border-radius:10px;" margin="auto">
+        <source src="./static/videos/slides_only.mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website borrowed from <a rel="license"
+                                                href="https://nerfies.github.io/">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
